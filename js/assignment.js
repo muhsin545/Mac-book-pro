@@ -1,43 +1,104 @@
-const exMemory = document.getElementById('ex-memory');
-const exStorage = document.getElementById('ex-storage');
-const deliveryCost = document.getElementById('delivery-cost');
+function updateCosts(id, price) {
+    const updatePrice = document.getElementById(id);
+    updatePrice.innerText = price;
 
+};
+
+
+function getValue(id) {
+    var updatedPriceValue = document.getElementById(id);
+    updatedPriceValue = parseInt(updatedPriceValue.innerText);
+
+    return updatedPriceValue;
+
+
+};
+
+
+// 8gb
 document.getElementById('8gb-btn').addEventListener('click', function () {
-    const defultMemory = 0;
-    exMemory.innerText = defultMemory;
-    const exMemoryCost = Number(exMemory.innerText)
+    updateCosts('ex-memory', 0);
+    totalPrice();
+    finalTotal()
 });
+
+// 16gb
 document.getElementById('16gb-btn').addEventListener('click', function () {
-    const changedMemoryCost = 180;
-    exMemory.innerText = changedMemoryCost;
-    const exMemoryCost = Number(exMemory.innerText)
+    updateCosts('ex-memory', 180);
+    totalPrice();
+    finalTotal()
 });
 
+
+// 256ssd 
 document.getElementById('256ssd').addEventListener('click', function () {
-    const defultStorage = 0;
-    exStorage.innerText = defultStorage;
-    const storageCost = Number(exStorage.innerText);
-})
-
+    updateCosts('ex-storage', 0);
+    totalPrice();
+    finalTotal()
+});
+// 512ssd 
 document.getElementById('512ssd').addEventListener('click', function () {
-    const ssd512Storage = 100;
-    exStorage.innerText = ssd512Storage;
-    const storageCost = Number(exStorage.innerText);
-})
-
+    updateCosts('ex-storage', 100);
+    totalPrice();
+    finalTotal()
+});
+// 1tb 
 document.getElementById('1tb').addEventListener('click', function () {
-    const ssd1TBStorage = 180;
-    exStorage.innerText = ssd1TBStorage;
-    const storageCost = Number(exStorage.innerText);
+    updateCosts('ex-storage', 180);
+    totalPrice();
+    finalTotal()
+});
+// freedelivery 
+document.getElementById('freeDelivery').addEventListener('click', function () {
+    updateCosts('delivery-cost', 0);
+    totalPrice();
+    finalTotal()
+});
+// quickDelivery
+document.getElementById('quickDelivery').addEventListener('click', function () {
+    updateCosts('delivery-cost', 20);
+    totalPrice();
+    finalTotal()
+});
+// promoCode 
+document.getElementById('promoCodeBtn').addEventListener('click', function () {
+    finalTotal();
 });
 
-document.getElementById("freeDelivery").addEventListener('click', function () {
-    const freeDelivery = 0;
-    deliveryCost.innerText = freeDelivery;
-    const deliveryCostTotal = Number(deliveryCost.innerText)
-})
-document.getElementById("quickDelivery").addEventListener('click', function () {
-    const quickDelivery = 20;
-    deliveryCost.innerText = quickDelivery;
-    const deliveryCostTotal = Number(deliveryCost.innerText);
-})
+
+// function 
+
+function totalPrice() {
+    const bestPrice = getValue('fixed-Price');
+    const memoryPrice = getValue('ex-memory');
+    const storagePrice = getValue('ex-storage');
+    const deliveryCost = getValue('delivery-cost');
+    var total = document.getElementById('total-price');
+    total.innerText = bestPrice + memoryPrice + storagePrice + deliveryCost;
+    const finalCost = document.getElementById('final-Total')
+    var finalTotal = parseInt(finalCost.innerText);
+    finalTotal = total.innerText;
+}
+totalPrice();
+
+function finalTotal() {
+    const bestPrice = getValue('fixed-Price');
+    const memoryPrice = getValue('ex-memory');
+    const storagePrice = getValue('ex-storage');
+    const deliveryCost = getValue('delivery-cost');
+    var total = document.getElementById('final-Total');
+    const finalCost = total.innerText;
+    const finalTotal = parseInt(finalCost);
+    let promoInput = document.getElementById('promoCode');
+    let promoInputValue = promoInput.value;
+    if (promoInputValue == 'stevekaku') {
+        const discount = (bestPrice + memoryPrice + storagePrice + deliveryCost) * 0.2;
+        total.innerText = (bestPrice + memoryPrice + storagePrice + deliveryCost) - discount;
+    } else {
+        total.innerText = bestPrice + memoryPrice + storagePrice + deliveryCost;
+    }
+    promoInput.value = '';
+    return total.innerText
+
+}
+finalTotal()
